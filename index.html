@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ระบบนักเรียน ม.1/6 | ศรีเมืองวิทยาคาร</title>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="login-section" class="container" style="max-width: 400px; margin-top: 10vh;">
+        <div class="text-center" style="margin-bottom: 2rem;">
+            <h2>เข้าสู่ระบบ ม.1/6</h2>
+            <p>ใช้อีเมลและรหัสผ่านตามที่โรงเรียนกำหนด</p>
+        </div>
+        <div class="form-group">
+            <label>อีเมล (เช่น 19598@simuang.ac.th)</label>
+            <input type="email" id="emailInput" class="form-control" placeholder="รหัสนักเรียน@simuang.ac.th">
+        </div>
+        <div class="form-group">
+            <label>รหัสผ่าน</label>
+            <input type="password" id="passwordInput" class="form-control" placeholder="รหัสผ่าน">
+        </div>
+        <button id="loginBtn" class="btn btn-primary" style="width: 100%;">เข้าสู่ระบบ</button>
+        <p id="loginMessage" style="color: red; margin-top: 1rem; text-align: center;"></p>
+    </div>
+
+    <div id="app-section" class="app-layout" style="display: none;">
+        
+        <aside class="sidebar">
+            <div class="profile-card">
+                <div class="profile-avatar" id="profileInitial">ก</div>
+                <h3 id="profileName">ชื่อ-สกุล</h3>
+                <p id="profileId">เลขประจำตัว: 12345</p>
+                <div class="gpa-display">
+                    <span>GPA รวม:</span>
+                    <strong id="totalGpa">0.00</strong>
+                </div>
+            </div>
+            
+            <button class="btn btn-secondary" style="width: 100%; margin-bottom: 0.5rem;" onclick="openModal('passwordModal')">เปลี่ยนรหัสผ่าน</button>
+            <button id="logoutBtn" class="btn btn-danger" style="width: 100%;">ออกจากระบบ</button>
+        </aside>
+
+        <main class="main-content">
+            <div class="card">
+                <div class="header-flex">
+                    <h2>บันทึกผลการเรียน</h2>
+                    <button class="btn btn-primary" onclick="openModal('gradeModal')">+ เพิ่มคะแนน</button>
+                </div>
+                <table id="scoreTable">
+                    <thead>
+                        <tr>
+                            <th>วิชา</th>
+                            <th>คะแนน</th>
+                            <th>เกรด</th>
+                            <th>จัดการ</th>
+                        </tr>
+                    </thead>
+                    <tbody id="gradeTbody">
+                        </tbody>
+                </table>
+            </div>
+
+            <div class="card chat-container">
+                <h2>แชทห้อง ม.1/6</h2>
+                <div id="chatBox" class="chat-box">
+                    </div>
+                <div class="chat-input-area">
+                    <input type="text" id="chatMessage" class="form-control" placeholder="พิมพ์ข้อความ...">
+                    <button id="sendChatBtn" class="btn btn-primary">ส่ง</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div class="modal-overlay" id="gradeModal">
+        <div class="modal-content">
+            <h3>บันทึกคะแนนใหม่</h3>
+            <div class="form-group">
+                <label>วิชา</label>
+                <select id="subjectSelect" class="form-control">
+                    <option value="ค21102 คณิตศาสตร์">ค21102 คณิตศาสตร์</option>
+                    <option value="ว21102 วิทยาศาสตร์">ว21102 วิทยาศาสตร์</option>
+                    <option value="ท21102 ภาษาไทย">ท21102 ภาษาไทย</option>
+                    <option value="อ21102 ภาษาอังกฤษ">อ21102 ภาษาอังกฤษ</option>
+                    <option value="ส21103 สังคมศึกษา">ส21103 สังคมศึกษา</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>คะแนน (0-100)</label>
+                <input type="number" id="scoreInput" class="form-control" min="0" max="100">
+            </div>
+            <div class="header-flex">
+                <button class="btn btn-secondary" onclick="closeModal('gradeModal')">ยกเลิก</button>
+                <button id="saveGradeBtn" class="btn btn-primary">บันทึก</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="passwordModal">
+        <div class="modal-content">
+            <h3>เปลี่ยนรหัสผ่าน</h3>
+            <div class="form-group">
+                <label>รหัสผ่านใหม่ (อย่างน้อย 6 ตัวอักษร)</label>
+                <input type="password" id="newPassword" class="form-control">
+            </div>
+            <div class="header-flex">
+                <button class="btn btn-secondary" onclick="closeModal('passwordModal')">ยกเลิก</button>
+                <button id="changePwdBtn" class="btn btn-primary">ยืนยัน</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="app.js"></script>
+</body>
+</html>
