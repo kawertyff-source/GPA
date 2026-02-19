@@ -3,112 +3,124 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ระบบนักเรียน ม.1/6 | ศรีเมืองวิทยาคาร</title>
-    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <title>Srimuang 1/6 | Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body>
 
-    <div id="login-section" class="container" style="max-width: 400px; margin-top: 10vh;">
-        <div class="text-center" style="margin-bottom: 2rem;">
-            <h2>เข้าสู่ระบบ ม.1/6</h2>
-            <p>ใช้อีเมลและรหัสผ่านตามที่โรงเรียนกำหนด</p>
+    <div class="bg-gradient"></div>
+
+    <div id="login-screen" class="overlay">
+        <div class="glass-card login-box">
+            <img src="https://upload.wikimedia.org/wikipedia/th/a/a1/Srimuang_logo.png" class="logo">
+            <h2>Command Center 1/6</h2>
+            <input type="email" id="email" placeholder="รหัสนักเรียน@simuang.ac.th">
+            <input type="password" id="password" placeholder="รหัสผ่าน">
+            <button id="loginBtn">เชื่อมต่อระบบ</button>
+            <p id="auth-error"></p>
         </div>
-        <div class="form-group">
-            <label>อีเมล (เช่น 19598@simuang.ac.th)</label>
-            <input type="email" id="emailInput" class="form-control" placeholder="รหัสนักเรียน@simuang.ac.th">
-        </div>
-        <div class="form-group">
-            <label>รหัสผ่าน</label>
-            <input type="password" id="passwordInput" class="form-control" placeholder="รหัสผ่าน">
-        </div>
-        <button id="loginBtn" class="btn btn-primary" style="width: 100%;">เข้าสู่ระบบ</button>
-        <p id="loginMessage" style="color: red; margin-top: 1rem; text-align: center;"></p>
     </div>
 
-    <div id="app-section" class="app-layout" style="display: none;">
-        
+    <div id="main-app" class="app-container" style="display: none;">
         <aside class="sidebar">
-            <div class="profile-card">
-                <div class="profile-avatar" id="profileInitial">ก</div>
-                <h3 id="profileName">ชื่อ-สกุล</h3>
-                <p id="profileId">เลขประจำตัว: 12345</p>
-                <div class="gpa-display">
-                    <span>GPA รวม:</span>
-                    <strong id="totalGpa">0.00</strong>
-                </div>
+            <div class="profile-section">
+                <div id="user-avatar" class="avatar-circle"></div>
+                <h3 id="display-name">---</h3>
+                <span id="display-id">ID: -----</span>
             </div>
-            
-            <button class="btn btn-secondary" style="width: 100%; margin-bottom: 0.5rem;" onclick="openModal('passwordModal')">เปลี่ยนรหัสผ่าน</button>
-            <button id="logoutBtn" class="btn btn-danger" style="width: 100%;">ออกจากระบบ</button>
+            <nav>
+                <button class="nav-btn active" data-page="home">หน้าแรก</button>
+                <button class="nav-btn" data-page="grades">บันทึกเกรด</button>
+                <button class="nav-btn" data-page="chat">ห้องแชท</button>
+                <button id="admin-menu-btn" class="nav-btn admin-only" style="display:none;">Admin Tools</button>
+            </nav>
+            <button id="logoutBtn" class="logout-link">ออกจากระบบ</button>
         </aside>
 
-        <main class="main-content">
-            <div class="card">
-                <div class="header-flex">
-                    <h2>บันทึกผลการเรียน</h2>
-                    <button class="btn btn-primary" onclick="openModal('gradeModal')">+ เพิ่มคะแนน</button>
+        <main class="content-area">
+            <section id="page-home" class="page active">
+                <div class="announcement-banner" id="banner-area">
+                    <marquee id="ann-text">ยังไม่มีประกาศใหม่จากแอดมิน...</marquee>
                 </div>
-                <table id="scoreTable">
-                    <thead>
-                        <tr>
-                            <th>วิชา</th>
-                            <th>คะแนน</th>
-                            <th>เกรด</th>
-                            <th>จัดการ</th>
-                        </tr>
-                    </thead>
-                    <tbody id="gradeTbody">
-                        </tbody>
-                </table>
-            </div>
-
-            <div class="card chat-container">
-                <h2>แชทห้อง ม.1/6</h2>
-                <div id="chatBox" class="chat-box">
+                
+                <div class="stat-grid">
+                    <div class="glass-card">
+                        <p>GPA ของคุณ</p>
+                        <h1 id="user-gpa">0.00</h1>
                     </div>
-                <div class="chat-input-area">
-                    <input type="text" id="chatMessage" class="form-control" placeholder="พิมพ์ข้อความ...">
-                    <button id="sendChatBtn" class="btn btn-primary">ส่ง</button>
+                    <div class="glass-card" id="current-period-box">
+                        <p>ขณะนี้กำลังเรียน</p>
+                        <h2 id="current-sub">-</h2>
+                        <small id="next-sub">ต่อไป: -</small>
+                    </div>
                 </div>
-            </div>
+
+                <div class="glass-card schedule-container">
+                    <h3>ตารางเรียน ม.1/6 (ภาค 2/2568)</h3>
+                    <div id="schedule-table-target"></div>
+                </div>
+            </section>
+
+            <section id="page-grades" class="page">
+                <div class="header-inline">
+                    <h2>สมุดพกพาดิจิทัล</h2>
+                    <button class="btn-main" onclick="toggleModal('gradeModal', true)">+ เพิ่มผลการเรียน</button>
+                </div>
+                <div class="table-wrapper">
+                    <table id="grade-table">
+                        <thead>
+                            <tr><th>วิชา</th><th>คะแนน</th><th>เกรด</th><th>จัดการ</th></tr>
+                        </thead>
+                        <tbody id="grade-body"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="page-chat" class="page">
+                <div class="chat-container">
+                    <div id="chat-messages" class="chat-list"></div>
+                    <div class="chat-input-row">
+                        <input type="text" id="chat-input" placeholder="พิมพ์ข้อความ...">
+                        <button id="send-chat">ส่ง</button>
+                    </div>
+                </div>
+            </section>
+
+            <section id="page-admin" class="page">
+                <h2>ระบบหลังบ้านสำหรับ Admin</h2>
+                <div class="admin-grid">
+                    <div class="glass-card">
+                        <h4>ส่งประกาศถึงทุกคน</h4>
+                        <textarea id="admin-ann" placeholder="ใส่ข้อความที่นี่..."></textarea>
+                        <button id="update-ann-btn">อัปเดตประกาศ</button>
+                    </div>
+                    <div class="glass-card full-width">
+                        <h4>ภาพรวมเกรดเฉลี่ยทั้งห้อง</h4>
+                        <div id="admin-student-list"></div>
+                    </div>
+                </div>
+            </section>
         </main>
     </div>
 
-    <div class="modal-overlay" id="gradeModal">
-        <div class="modal-content">
-            <h3>บันทึกคะแนนใหม่</h3>
-            <div class="form-group">
-                <label>วิชา</label>
-                <select id="subjectSelect" class="form-control">
-                    <option value="ค21102 คณิตศาสตร์">ค21102 คณิตศาสตร์</option>
-                    <option value="ว21102 วิทยาศาสตร์">ว21102 วิทยาศาสตร์</option>
-                    <option value="ท21102 ภาษาไทย">ท21102 ภาษาไทย</option>
-                    <option value="อ21102 ภาษาอังกฤษ">อ21102 ภาษาอังกฤษ</option>
-                    <option value="ส21103 สังคมศึกษา">ส21103 สังคมศึกษา</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>คะแนน (0-100)</label>
-                <input type="number" id="scoreInput" class="form-control" min="0" max="100">
-            </div>
-            <div class="header-flex">
-                <button class="btn btn-secondary" onclick="closeModal('gradeModal')">ยกเลิก</button>
-                <button id="saveGradeBtn" class="btn btn-primary">บันทึก</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal-overlay" id="passwordModal">
-        <div class="modal-content">
-            <h3>เปลี่ยนรหัสผ่าน</h3>
-            <div class="form-group">
-                <label>รหัสผ่านใหม่ (อย่างน้อย 6 ตัวอักษร)</label>
-                <input type="password" id="newPassword" class="form-control">
-            </div>
-            <div class="header-flex">
-                <button class="btn btn-secondary" onclick="closeModal('passwordModal')">ยกเลิก</button>
-                <button id="changePwdBtn" class="btn btn-primary">ยืนยัน</button>
+    <div id="gradeModal" class="modal">
+        <div class="modal-content glass-card">
+            <h3>เพิ่มผลการเรียน</h3>
+            <label>เลือกวิชา</label>
+            <select id="sub-select">
+                <option>ค21102 คณิตศาสตร์</option>
+                <option>ว21102 วิทยาศาสตร์</option>
+                <option>ท21102 ภาษาไทย</option>
+                <option>อ21102 ภาษาอังกฤษ</option>
+                <option>ส21103 สังคมศึกษา</option>
+            </select>
+            <label>คะแนน (0-100)</label>
+            <input type="number" id="score-input" min="0" max="100">
+            <div class="modal-footer">
+                <button onclick="saveNewGrade()" class="btn-main">บันทึก</button>
+                <button onclick="toggleModal('gradeModal', false)">ยกเลิก</button>
             </div>
         </div>
     </div>
